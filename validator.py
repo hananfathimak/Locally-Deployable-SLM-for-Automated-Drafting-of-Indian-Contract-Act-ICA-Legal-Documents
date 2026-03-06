@@ -34,15 +34,18 @@ def _extract_sections(text: str):
 
 def _validate_section_numbers(sections):
     errors = []
+
     for i, (num, _) in enumerate(sections):
         if num != i + 1:
             errors.append("Section numbers are not sequential")
             break
+
     return errors
 
 
 def _check_mandatory_headings(sections):
     errors = []
+
     present = [title for _, title in sections]
 
     for heading in MANDATORY_HEADINGS:
@@ -63,7 +66,7 @@ def _detect_hallucinated_sections(sections):
 
 
 def _extract_money_values(text: str):
-    pattern = r"(?:rs\.?|₹)\s?([\d,]+)"
+    pattern = r"(?:rs\.?|₹)\s*([\d,]+)"
     matches = re.findall(pattern, text.lower())
 
     values = []
@@ -75,6 +78,7 @@ def _extract_money_values(text: str):
 
 def _validate_monetary_consistency(text: str):
     errors = []
+
     values = _extract_money_values(text)
 
     for value in values:
